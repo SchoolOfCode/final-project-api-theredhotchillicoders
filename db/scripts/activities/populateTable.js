@@ -9,29 +9,35 @@ const dummy = [{
 },
 {
   title: "pasta bake",
-  category: "recipies",
+  category: "recipes",
   description: "put in the oven",
   duration: "20 minutes",
 },
 {
   title: "yoga",
   category: "wellness",
-  description: "do the courpse",
+  description: "do the corpse",
   duration: "5 minutes",
 },
 ]
 
-const response = await db.query(
-  `INSERT INTO activities (title, category, description, duration) VALUES ($1, $2, $3, $4,);`,
+async function populateTable(){
+  for(let i = 0; i < dummy.length; i++){
+    const title = dummy[i].title;
+    const category = dummy[i].category;
+    const description = dummy[i].description;
+    const duration = dummy[i].duration ;
   
-    }
-}
-populateTable();
-);
-
+    const response = await db.query
+  (`INSERT INTO activities(title, category, description, duration) VALUES($1, $2, $3, $4) 
+  RETURNING title;`, [title, category, description, duration]);
 console.log(response);
+  }
+}
 
-db.end();
+populateTable()
+
+
 
 // async function populateTable(){
 //   for(let i = 0; i < dummy.length; i++){
@@ -44,3 +50,5 @@ db.end();
 //       feeling, reflection, workshop, url ) VALUES ($1 , $2, $3, $4, $5) 
 //       RETURNING name`, [name,feeling, reflection, workshop, url])
 //       console.log(res);
+//      }
+//populateTable();
