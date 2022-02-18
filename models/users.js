@@ -6,9 +6,10 @@ export async function getAllUsers() {
 }
 
 export async function createData({ title, category, description, duration }) {
+
   const data = await db.query(
     `INSERT INTO activities(title, category, description, duration) VALUES($1, $2, $3, $4) 
-  RETURNING title;`,
+    RETURNING title;`,
     [title, category, description, duration]
   );
 
