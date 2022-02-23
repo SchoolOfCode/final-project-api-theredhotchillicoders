@@ -1,6 +1,7 @@
 import db from "../db/connection.js";
+//changed to activities
 
-export async function getAllUsers() {
+export async function getAllActivities() {
   const result = await db.query(`SELECT * FROM activities;`);
   return result.rows;
 }

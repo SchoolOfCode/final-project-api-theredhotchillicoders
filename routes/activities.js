@@ -1,15 +1,16 @@
 import express from 'express';
-import { getAllUsers, createData } from '../models/users.js';
+import { getAllActivities, createData } from '../models/activities.js';
+//changed to activities
 
 const router = express.Router();
 
 /* GET users listing. */
 router.get("/", async function (req, res, next) {
-  const users = await getAllUsers();
+  const activities = await getAllActivities();
 
   res.json({
     success: true,
-    payload: users,
+    payload: activities,
   });
 });
 
