@@ -1,5 +1,6 @@
 import express from 'express';
 import { getAllActivities, createData } from '../models/activities.js';
+//changed to activities
 
 const router = express.Router();
 

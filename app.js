@@ -1,14 +1,13 @@
 import express from "express";
 import path from "path";
-
 import __dirname from "./dirname.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import logger from "morgan";
-
 import ActivitiesRouter from "./routes/activities.js";
 import wellbeingRouter from "./routes/wellbeing.js";
 
+//changed to activities
 const app = express();
 
 app.use(logger("dev"));
