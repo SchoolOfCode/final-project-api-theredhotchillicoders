@@ -6,12 +6,17 @@ export async function getAllActivities() {
   return result.rows;
 }
 
-export async function createData({ title, category, description, duration }) {
-
+export async function createData({
+  date,
+  title,
+  category,
+  description,
+  duration,
+}) {
   const data = await db.query(
-    `INSERT INTO activities(title, category, description, duration) VALUES($1, $2, $3, $4) 
+    `INSERT INTO activities(date, title, category, description, duration) VALUES($1, $2, $3, $4, $5) 
     RETURNING title;`,
-    [title, category, description, duration]
+    [date, title, category, description, duration]
   );
 
   return data.rows;
