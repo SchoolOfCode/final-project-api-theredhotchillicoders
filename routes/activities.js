@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllActivities, createData } from "../models/activities.js";
+import { getAllActivities, createData, deleteTaskById } from "../models/activities.js";
 //changed to activities
 
 const router = express.Router();
@@ -25,8 +25,14 @@ router.post("/", async function (req, res, next) {
 });
 
 router.delete("/:id", async function (req, res, next) {
-  const { id } = req.params;
+  const {id} = Number(req.params);
+  const remove = await deleteTaskById(id)
   console.log(id);
+  res.json({
+    success: true,
+    payload: remove,
+  });
+
   // deleteTaskById(id);
 });
 
