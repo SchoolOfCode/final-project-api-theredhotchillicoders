@@ -1,5 +1,5 @@
-import express from 'express';
-import { getAllActivities, createData } from '../models/activities.js';
+import express from "express";
+import { getAllActivities, createData } from "../models/activities.js";
 //changed to activities
 
 const router = express.Router();
@@ -22,6 +22,12 @@ router.post("/", async function (req, res, next) {
     success: true,
     payload: create,
   });
+});
+
+router.delete("/:id", async function (req, res, next) {
+  const { id } = req.params;
+  console.log(id);
+  // deleteTaskById(id);
 });
 
 export default router;
