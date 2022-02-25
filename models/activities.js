@@ -28,5 +28,5 @@ export async function deleteTaskById(id) {
   WHERE id= $1`,
     [id]
   );
-  return `Deleted ${id}`
+  return `Deleted ${id}`;
 }
