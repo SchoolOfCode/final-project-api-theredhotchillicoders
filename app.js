@@ -6,6 +6,7 @@ import cors from "cors";
 import logger from "morgan";
 import ActivitiesRouter from "./routes/activities.js";
 import wellbeingRouter from "./routes/wellbeing.js";
+import usersRouter from "./routes/users.js";
 
 //changed to activities
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/activities", ActivitiesRouter);
 app.use("/wellbeing", wellbeingRouter);
+app.use("/users", usersRouter);
 
 app.use(function (req, res, next) {
   res

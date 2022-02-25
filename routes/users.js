@@ -1,26 +1,21 @@
 import express from "express";
-import {
-  getAllActivities,
-  createData,
-  deleteTaskById,
-} from "../models/activities.js";
-//changed to activities
+import { getAllUsers, createUser, deleteUserById } from "../models/users.js";
 
 const router = express.Router();
 
-/* GET users listing. */
+/* GET wellbeing activities. */
 router.get("/", async function (req, res, next) {
-  const activities = await getAllActivities();
+  const users = await getAllUsers();
 
   res.json({
     success: true,
-    payload: activities,
+    payload: users,
   });
 });
 
 router.post("/", async function (req, res, next) {
   const body = req.body;
-  const create = await createData(body);
+  const create = await createUser(body);
 
   res.json({
     success: true,
@@ -30,7 +25,7 @@ router.post("/", async function (req, res, next) {
 
 router.delete("/:id", async function (req, res, next) {
   const id = req.params.id;
-  const remove = await deleteTaskById(id);
+  const remove = await deleteUserById(id);
   console.log(id);
   res.json({
     success: true,
