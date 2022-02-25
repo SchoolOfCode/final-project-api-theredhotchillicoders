@@ -6,8 +6,11 @@
   "scripts": {
     "start": "node ./bin/www.js",
     "db:deploy": "node ./db/scripts/activities/createTable.js && node ./db/scripts/activities/populateTable.js",
-    "db:createactivities": "node -r dotenv/config ./db/scripts/activities/createTable.js",
+    "db:createActivitiesTable": "node -r dotenv/config ./db/scripts/activities/createTable.js",
+    "db:createWellbeingTable": "node -r dotenv/config ./db/scripts/Wellbeing/createTable.js",
+    "db:createUsersTable": "node -r dotenv/config ./db/scripts/users/createTable.js",
     "db:populateactivities": "node -r dotenv/config ./db/scripts/activities/populateTable.js",
+    "db:populateWellbeingTable": "node -r dotenv/config ./db/scripts/Wellbeing/populateWellbeingTable.js",
     "dev": "nodemon -r dotenv/config ./bin/www.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },

@@ -1,16 +1,32 @@
-import db from '../db/connection.js';
+import db from "../db/connection.js";
+//changed to activities
 
 export async function getAllActivities() {
-	const result = await db.query(`SELECT * FROM activities;`);
-	return result.rows;
+  const result = await db.query(`SELECT * FROM activities;`);
+  return result.rows;
 }
 
-export async function createData({ title, category, description, duration }) {
-	const data = await db.query(
-		`INSERT INTO activities(title, category, description, duration) VALUES($1, $2, $3, $4) 
+export async function createData({
+  date,
+  title,
+  category,
+  description,
+  duration,
+}) {
+  const data = await db.query(
+    `INSERT INTO activities(date, title, category, description, duration) VALUES($1, $2, $3, $4, $5) 
     RETURNING title;`,
-		[ title, category, description, duration ]
-	);
+    [date, title, category, description, duration]
+  );
 
-	return data.rows;
+  return data.rows;
+}
+
+export async function deleteTaskById(id) {
+  const data = await db.query(
+    `DELETE FROM activities
+  WHERE id= $1`,
+    [id]
+  );
+  return `Deleted ${id}`;
 }
