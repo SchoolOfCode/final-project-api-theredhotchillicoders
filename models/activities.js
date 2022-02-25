@@ -23,9 +23,10 @@ export async function createData({
 }
 
 export async function deleteTaskById(id) {
-  await db.query(
+  const data = await db.query(
     `DELETE FROM activities
   WHERE id= $1`,
     [id]
   );
+  return `Deleted ${id}`
 }

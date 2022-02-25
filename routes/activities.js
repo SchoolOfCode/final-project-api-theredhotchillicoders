@@ -25,7 +25,7 @@ router.post("/", async function (req, res, next) {
 });
 
 router.delete("/:id", async function (req, res, next) {
-  const {id} = Number(req.params);
+  const id = req.params.id;
   const remove = await deleteTaskById(id)
   console.log(id);
   res.json({
