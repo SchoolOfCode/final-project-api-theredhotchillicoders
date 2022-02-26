@@ -7,6 +7,7 @@ import logger from "morgan";
 import ActivitiesRouter from "./routes/activities.js";
 import wellbeingRouter from "./routes/wellbeing.js";
 import usersRouter from "./routes/users.js";
+import firebaseAuth from "./middleware/firebaseAuth.js";
 
 //changed to activities
 const app = express();
@@ -17,6 +18,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+//Firebase auth middleware checks which user is currently logged in updating req with user (req.user) which can be used in routes
+app.use(firebaseAuth);
 
 app.use("/activities", ActivitiesRouter);
 app.use("/wellbeing", wellbeingRouter);
@@ -33,4 +37,5 @@ app.use(function (err, req, res, next) {
   res.status(500).json(err);
 });
 
+//Note server runs on port 3001 locally
 export default app;

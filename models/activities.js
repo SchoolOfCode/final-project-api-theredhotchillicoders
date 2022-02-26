@@ -6,6 +6,13 @@ export async function getAllActivities() {
   return result.rows;
 }
 
+export async function getActivitiesByUser(userID) {
+  const result = await db.query(`SELECT * FROM activities WHERE userID= $1;`, [
+    userID,
+  ]);
+  return result.rows;
+}
+
 export async function createData({
   date,
   title,
