@@ -19,11 +19,12 @@ export async function createData({
   category,
   description,
   duration,
+  userid,
 }) {
   const data = await db.query(
-    `INSERT INTO activities(date, title, category, description, duration) VALUES($1, $2, $3, $4, $5) 
+    `INSERT INTO activities(date, title, category, description, duration, userid) VALUES($1, $2, $3, $4, $5, $6) 
     RETURNING title;`,
-    [date, title, category, description, duration]
+    [date, title, category, description, duration, userid]
   );
 
   return data.rows;
