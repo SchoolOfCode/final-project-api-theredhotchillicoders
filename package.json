@@ -11,6 +11,7 @@
     "db:createUsersTable": "node -r dotenv/config ./db/scripts/users/createTable.js",
     "db:populateactivities": "node -r dotenv/config ./db/scripts/activities/populateTable.js",
     "db:populateWellbeingTable": "node -r dotenv/config ./db/scripts/Wellbeing/populateWellbeingTable.js",
+    "db:deleteTable": "node -r dotenv/config ./db/scripts/activities/deleteTable.js",
     "dev": "nodemon -r dotenv/config ./bin/www.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
