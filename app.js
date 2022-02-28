@@ -8,6 +8,7 @@ import ActivitiesRouter from "./routes/activities.js";
 import wellbeingRouter from "./routes/wellbeing.js";
 import usersRouter from "./routes/users.js";
 import firebaseAuth from "./middleware/firebaseAuth.js";
+import recipesRouter from "./routes/recipesRoutes.js"
 
 //changed to activities
 const app = express();
@@ -25,6 +26,7 @@ app.use(firebaseAuth);
 app.use("/activities", ActivitiesRouter);
 app.use("/wellbeing", wellbeingRouter);
 app.use("/users", usersRouter);
+app.use("/recipes", recipesRouter);
 
 app.use(function (req, res, next) {
   res
