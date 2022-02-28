@@ -3,15 +3,26 @@ import {
   getAllActivities,
   createData,
   deleteTaskById,
+  getActivitiesByUser,
 } from "../models/activities.js";
 //changed to activities
 
 const router = express.Router();
 
-/* GET users listing. */
+/* GET all activities. */
 router.get("/", async function (req, res, next) {
   const activities = await getAllActivities();
 
+  res.json({
+    success: true,
+    payload: activities,
+  });
+});
+
+/* GET activities for a SPECIFIC user */
+router.get("/user", async function (req, res, next) {
+  const userID = req.user.uid;
+  const activities = await getActivitiesByUser(userID);
   res.json({
     success: true,
     payload: activities,
