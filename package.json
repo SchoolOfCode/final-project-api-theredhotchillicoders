@@ -1,0 +1,33 @@
+{
+  "name": "testing-project-week",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node ./bin/www.js",
+    "db:deploy": "node ./db/scripts/activities/createTable.js && node ./db/scripts/activities/populateTable.js",
+    "db:createActivitiesTable": "node -r dotenv/config ./db/scripts/activities/createTable.js",
+    "db:createWellbeingTable": "node -r dotenv/config ./db/scripts/Wellbeing/createTable.js",
+    "db:createUsersTable": "node -r dotenv/config ./db/scripts/users/createTable.js",
+    "db:populateactivities": "node -r dotenv/config ./db/scripts/activities/populateTable.js",
+    "db:populateWellbeingTable": "node -r dotenv/config ./db/scripts/Wellbeing/populateWellbeingTable.js",
+    "db:deleteTable": "node -r dotenv/config ./db/scripts/activities/deleteTable.js",
+    "dev": "nodemon -r dotenv/config ./bin/www.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "firebase-admin": "^10.0.2",
+    "morgan": "~1.9.1",
+    "pg": "^8.7.1"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "jest": "^27.4.5",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.1.6"
+  }
+}
