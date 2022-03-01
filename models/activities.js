@@ -30,12 +30,12 @@ export async function deleteTaskById(id) {
 	return `Deleted ${id}`;
 }
 
-export async function changeComplete(id) {
+export async function changeComplete(id, body) {
 	const data = await db.query(
 		`UPDATE activities
-  SET isComplete =  NOT isComplete
+  SET isComplete =  $2
   WHERE id=  $1 
   RETURNING title;`,
-		[ id ]
+		[ id , body]
 	);
 }
