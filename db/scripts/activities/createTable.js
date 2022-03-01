@@ -5,3 +5,16 @@ const response = await db.query(
 );
 
 db.end();
+
+
+
+// async function alterTable() {
+// 	const response = await db.query(
+// 		`ALTER TABLE activities
+//         ALTER COLUMN isComplete
+//         SET DEFAULT FALSE;`
+// 	);
+// }
+// alterTable();
+
+// db.end();
