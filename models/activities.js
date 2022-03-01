@@ -33,9 +33,9 @@ export async function deleteTaskById(id) {
 export async function changeComplete(id, body) {
 	const data = await db.query(
 		`UPDATE activities
-  SET isComplete =  $2
+  SET isComplete = $2
   WHERE id=  $1 
   RETURNING title;`,
-		[ id , body]
+		[ id, body.iscomplete ]
 	);
 }

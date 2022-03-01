@@ -54,7 +54,7 @@ router.delete('/:id', async function(req, res, next) {
 
 router.patch('/:id', async function(req, res, next) {
 	const id = req.params.id;
-	const body = req.params.body
+	const body = req.body;
 	const complete = await changeComplete(id, body);
 	console.log(id);
 	res.json({
