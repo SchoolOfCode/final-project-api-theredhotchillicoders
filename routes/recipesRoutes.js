@@ -6,7 +6,6 @@ const router = express.Router();
 
 /* GET all activities. */
 router.get("/", async function (req, res, next) {
-  console.log(req.body);
   const recipes = await getRecipe(req.body.recipes);
   res.json({
     success: true,
