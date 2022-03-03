@@ -5,7 +5,7 @@ import { getRecipe, getRecipeDetails } from "../models/recipes.js";
 const router = express.Router();
 
 /* GET all recipes. */
-router.get("/search", async function (req, res, next) {
+router.post("/search", async function (req, res, next) {
   const recipes = await getRecipe(req.body.recipes);
   res.json({
     success: true,

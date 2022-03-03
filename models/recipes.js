@@ -1,9 +1,10 @@
 import fetch from "node-fetch";
 const apiKey = process.env.RECIPE_API_KEY;
+const appID = process.env.RECIPE_APP_ID;
 
 export async function getRecipe(recipe) {
   const res = await fetch(
-    `https://api.spoonacular.com/recipes/complexSearch?query=${recipe}&sort=popularity&number=6`, //&apiKey=${apiKey}
+    `https://api.edamam.com/api/recipes/v2?app_key=${apiKey}&app_id=${appID}&type=public&q=${recipe}`,
     {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -11,8 +12,8 @@ export async function getRecipe(recipe) {
   );
   //Returns a list of recipes
   const data = await res.json();
-  console.log(data);
-  return data;
+  console.log(data.hits);
+  return data.hits.map((recipe) => recipe.recipe);
 }
 
 export async function getRecipeDetails(recipeID) {
