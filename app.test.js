@@ -1,9 +1,15 @@
-import supertest from 'supertest';
-import pool from './db/connection';
-import app from './app.js';
+import supertest from "supertest";
+import pool from "./db/connection";
+import app from "./app.js";
+import { login } from "./Firebase.test";
 
-const token = process.env.FIREBASE_TOKEN;
-const userID = process.env.USER_ID;
+// const token = process.env.FIREBASE_TOKEN;
+// const userID = process.env.USER_ID;
+const username = process.env.TEST_USER;
+const password = process.env.TEST_PASSWORD;
+const userInfo = await login(username, password);
+const token = userInfo.accessToken;
+const userID = userInfo.uid;
 
 const request = supertest(app);
 
@@ -12,67 +18,159 @@ const request = supertest(app);
 // });
 
 afterAll(async () => {
-	await pool.end();
+  await pool.end();
 });
 // this will allow this to run after every test
 
-describe('GET /activities', function() {
-	test('gives us back 200 status code', async function() {
-		const actual = await request.get('/activities').set('Authorization', 'Bearer ' + token);
+describe("GET /activities", function () {
+  test("gives us back 200 status code", async function () {
+    const actual = await request
+      .get("/activities")
+      .set("Authorization", "Bearer " + token);
 
-		expect(actual.statusCode).toBe(200);
-	});
-	test('gives us an array in a JSON object', async function() {
-		const actual = await request.get('/activities').set('Authorization', 'Bearer ' + token);
-		expect(actual.headers['content-type']).toBe('application/json; charset=utf-8');
+    expect(actual.statusCode).toBe(200);
+  });
+  test("returns an error if no token is provided (user is not logged in)", async function () {
+    const actual = await request.get("/activities");
+    expect(actual.statusCode).toBe(200);
+    expect(actual.body.message).toBe(
+      "Request contains no authorization header"
+    );
+  });
+  test("gives us an array in a JSON object", async function () {
+    const actual = await request
+      .get("/activities")
+      .set("Authorization", "Bearer " + token);
+    expect(actual.headers["content-type"]).toBe(
+      "application/json; charset=utf-8"
+    );
 
-		expect(actual.body).toStrictEqual({ success: true, payload: expect.any(Array) });
-	});
+    expect(actual.body).toStrictEqual({
+      success: true,
+      payload: expect.any(Array),
+    });
+  });
 
-	test('check every row has id, user id, title, category, iscomplete', async function() {
-		const actual = await request.get('/activities').set('Authorization', 'Bearer ' + token);
-		actual.body.payload.forEach((element) => {
-			expect(element).toHaveProperty('id', expect.any(Number));
-			expect(element).toHaveProperty('userid', expect.any(String));
-			expect(element).toHaveProperty('category', expect.any(String));
-			expect(element).toHaveProperty('title', expect.any(String));
-			expect(element).toHaveProperty('iscomplete', expect.any(Boolean));
-		});
-	});
+  test("check every row has id, user id, title, category, iscomplete", async function () {
+    const actual = await request
+      .get("/activities")
+      .set("Authorization", "Bearer " + token);
+    actual.body.payload.forEach((element) => {
+      expect(element).toHaveProperty("id", expect.any(Number));
+      expect(element).toHaveProperty("userid", expect.any(String));
+      expect(element).toHaveProperty("category", expect.any(String));
+      expect(element).toHaveProperty("title", expect.any(String));
+      expect(element).toHaveProperty("iscomplete", expect.any(Boolean));
+    });
+  });
 });
 
-describe('GET /activities/user', function() {
-	test('gives us back 200 status code', async function() {
-		const actual = await request.get('/activities/user').set('Authorization', 'Bearer ' + token);
+describe("GET /activities/user", function () {
+  test("gives us back 200 status code", async function () {
+    const actual = await request
+      .get("/activities/user")
+      .set("Authorization", "Bearer " + token);
 
-		expect(actual.statusCode).toBe(200);
-	});
-	test('gives us an array in a JSON object', async function() {
-		const actual = await request.get('/activities/user').set('Authorization', 'Bearer ' + token);
-		expect(actual.headers['content-type']).toBe('application/json; charset=utf-8');
+    expect(actual.statusCode).toBe(200);
+  });
+  test("gives us an array in a JSON object", async function () {
+    const actual = await request
+      .get("/activities/user")
+      .set("Authorization", "Bearer " + token);
+    expect(actual.headers["content-type"]).toBe(
+      "application/json; charset=utf-8"
+    );
 
-		expect(actual.body).toStrictEqual({ success: true, payload: expect.any(Array) });
-	});
+    expect(actual.body).toStrictEqual({
+      success: true,
+      payload: expect.any(Array),
+    });
+  });
 
-	test('check every row has id, user id, title, category, iscomplete', async function() {
-		const actual = await request.get('/activities/user').set('Authorization', 'Bearer ' + token);
-		console.log('element', actual.body.payload);
-		actual.body.payload.forEach((element) => {
-			expect(element).toHaveProperty('id', expect.any(Number));
-			expect(element).toHaveProperty('userid', expect.any(String));
-			expect(element).toHaveProperty('category', expect.any(String));
-			expect(element).toHaveProperty('title', expect.any(String));
-			expect(element).toHaveProperty('iscomplete', expect.any(Boolean));
-		});
-	});
+  test("check every row has id, user id, title, category, iscomplete", async function () {
+    const actual = await request
+      .get("/activities/user")
+      .set("Authorization", "Bearer " + token);
+    actual.body.payload.forEach((element) => {
+      expect(element).toHaveProperty("id", expect.any(Number));
+      expect(element).toHaveProperty("userid", expect.any(String));
+      expect(element).toHaveProperty("category", expect.any(String));
+      expect(element).toHaveProperty("title", expect.any(String));
+      expect(element).toHaveProperty("iscomplete", expect.any(Boolean));
+    });
+  });
 
-	test('results only contain specific information for specified user', async function() {
-		const actual = await request.get('/activities/user').set('Authorization', 'Bearer ' + token);
-		actual.body.payload.forEach((element) => {
-			console.log('element', element);
-			expect(element).toHaveProperty('userid', userID);
-		});
-	});
+  test("results only contain specific information for specified user", async function () {
+    const actual = await request
+      .get("/activities/user")
+      .set("Authorization", "Bearer " + token);
+    actual.body.payload.forEach((element) => {
+      expect(element).toHaveProperty("userid", userID);
+    });
+  });
+});
+
+describe("POST /activities", function () {
+  test("gives us back 200 status code with a correctly formatted object", async function () {
+    const actual = await request
+      .post("/activities")
+      .set("Authorization", "Bearer " + token)
+      .send({
+        date: new Date(),
+        title: "Test",
+        category: "Test",
+        description: "Test",
+        duration: "Test",
+        userid: userID,
+      });
+    expect(actual.statusCode).toBe(200);
+  });
+  test("gives us back an error with an incorrectly formatted object", async function () {
+    const actual = await request
+      .post("/activities")
+      .set("Authorization", "Bearer " + token)
+      .send({
+        date: false,
+        title: false,
+        category: false,
+        description: false,
+        duration: false,
+        userid: userID,
+      });
+    expect(actual.body.success).toBe(false);
+  });
+});
+
+describe("PATCH /activities", function () {
+  test("allows the last test item posted to be completed", async function () {
+    const activitesForTestAccount = await request
+      .get("/activities/user")
+      .set("Authorization", "Bearer " + token);
+    const idToPatch = activitesForTestAccount.body.payload[0].id;
+
+    const actual = await request
+      .patch(`/activities/${idToPatch}`)
+      .set("Authorization", "Bearer " + token)
+      .send({
+        iscomplete: true,
+      });
+    expect(actual.body.success).toBe(true);
+  });
+});
+
+describe("DELETE /activities", function () {
+  test("allows the last test item posted to be deleted", async function () {
+    const activitesForTestAccount = await request
+      .get("/activities/user")
+      .set("Authorization", "Bearer " + token);
+    const idToDelete = activitesForTestAccount.body.payload[0].id;
+
+    const actual = await request
+      .delete(`/activities/${idToDelete}`)
+      .set("Authorization", "Bearer " + token);
+    expect(actual.body.success).toBe(true);
+    expect(actual.body.payload).toBe(`Deleted ${idToDelete}`);
+  });
 });
 
 /* can we check everything matches in the object? */
