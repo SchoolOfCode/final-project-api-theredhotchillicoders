@@ -15,17 +15,3 @@ export async function getRecipe(recipe) {
   console.log(data.hits);
   return data.hits.map((recipe) => recipe.recipe);
 }
-
-export async function getRecipeDetails(recipeID) {
-  const res = await fetch(
-    `https://api.spoonacular.com/recipes/${recipeID}/information?includeNutrition=false`,
-    {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    }
-  );
-  //Returns details for a single recipe
-  const data = await res.json();
-  console.log(data);
-  return data;
-}
