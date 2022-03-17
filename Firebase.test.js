@@ -3,7 +3,6 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const username = process.env.TEST_USER;
 const password = process.env.TEST_PASSWORD;
-
 export async function login(username, password) {
   const authentication = getAuth();
   //Test login with .env username and password
